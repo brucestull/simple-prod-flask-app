@@ -27,8 +27,8 @@ I'll walk you through it **clearly and step-by-step** — we'll cover:
 Inside your WSL Ubuntu:
 
 ```bash
-mkdir myflaskapp
-cd myflaskapp
+mkdir simple-prod-flask-app
+cd simple-prod-flask-app
 python3 -m venv venv
 source venv/bin/activate
 pip install flask
@@ -94,20 +94,20 @@ sudo apt install supervisor
 Create a Supervisor config:
 
 ```bash
-sudo nano /etc/supervisor/conf.d/myflaskapp.conf
+sudo nano /etc/supervisor/conf.d/simpleprodflaskapp.conf
 ```
 
 Paste this:
 
 ```
-[program:myflaskapp]
-directory=/home/YOUR-USERNAME/myflaskapp
-command=/home/YOUR-USERNAME/myflaskapp/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 app:app
+[program:simpleprodflaskapp]
+directory=/home/YOUR-USERNAME/simple-prod-flask-app
+command=/home/YOUR-USERNAME/simple-prod-flask-app/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 app:app
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/myflaskapp.err.log
-stdout_logfile=/var/log/myflaskapp.out.log
-environment=PATH="/home/YOUR-USERNAME/myflaskapp/venv/bin",VIRTUAL_ENV="/home/YOUR-USERNAME/myflaskapp/venv"
+stderr_logfile=/var/log/simpleprodflaskapp.err.log
+stdout_logfile=/var/log/simpleprodflaskapp.out.log
+environment=PATH="/home/YOUR-USERNAME/simple-prod-flask-app/venv/bin",VIRTUAL_ENV="/home/YOUR-USERNAME/simple-prod-flask-app/venv"
 user=YOUR-USERNAME
 ```
 
@@ -116,7 +116,7 @@ Then run:
 ```bash
 sudo supervisorctl reread
 sudo supervisorctl update
-sudo supervisorctl start myflaskapp
+sudo supervisorctl start simpleprodflaskapp
 ```
 
 ✅ Now your Flask app is *managed properly*.
@@ -136,7 +136,7 @@ sudo apt install nginx
 Create a config:
 
 ```bash
-sudo nano /etc/nginx/sites-available/myflaskapp
+sudo nano /etc/nginx/sites-available/simpleprodflaskapp
 ```
 
 Paste:
@@ -157,7 +157,7 @@ server {
 Link it:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/myflaskapp /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/simpleprodflaskapp /etc/nginx/sites-enabled
 sudo nginx -t
 sudo systemctl restart nginx
 ```
@@ -189,8 +189,8 @@ sudo systemctl restart nginx
 sudo apt update
 sudo apt install python3-venv supervisor nginx
 
-mkdir myflaskapp
-cd myflaskapp
+mkdir simple-prod-flask-app
+cd simple-prod-flask-app
 python3 -m venv venv
 source venv/bin/activate
 pip install flask gunicorn
@@ -222,14 +222,14 @@ Let me know! 🚀
 Help me replace the important parts of:
 
 ```ini
-[program:myflaskapp]
-directory=/home/YOUR-USERNAME/myflaskapp
-command=/home/YOUR-USERNAME/myflaskapp/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 app:app
+[program:simpleprodflaskapp]
+directory=/home/YOUR-USERNAME/simple-prod-flask-app
+command=/home/YOUR-USERNAME/simple-prod-flask-app/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8000 app:app
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/myflaskapp.err.log
-stdout_logfile=/var/log/myflaskapp.out.log
-environment=PATH="/home/YOUR-USERNAME/myflaskapp/venv/bin",VIRTUAL_ENV="/home/YOUR-USERNAME/myflaskapp/venv"
+stderr_logfile=/var/log/simpleprodflaskapp.err.log
+stdout_logfile=/var/log/simpleprodflaskapp.out.log
+environment=PATH="/home/YOUR-USERNAME/simple-prod-flask-app/venv/bin",VIRTUAL_ENV="/home/YOUR-USERNAME/simple-prod-flask-app/venv"
 user=YOUR-USERNAME
 ```
 
